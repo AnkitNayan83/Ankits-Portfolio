@@ -18,26 +18,59 @@ import { type AdapterAccount } from "next-auth/adapters";
  */
 export const createTable = pgTableCreator((name) => `ankits_portfolio_${name}`);
 
-export const posts = createTable(
-  "post",
+export const blogs = createTable("blogs", {
+  id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
+  title: varchar("name", { length: 256 }),
+  content: text("content"),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(
+    () => new Date(),
+  ),
+});
+
+export const comments = createTable("comments", {
+  id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
+  blogId: integer("blog_id")
+    .notNull()
+    .references(() => blogs.id, { onDelete: "cascade" }),
+  userId: varchar("user_id", { length: 255 })
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  content: text("content").notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(
+    () => new Date(),
+  ),
+});
+
+export const likes = createTable(
+  "likes",
   {
-    id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
-    name: varchar("name", { length: 256 }),
-    createdById: varchar("created_by", { length: 255 })
+    blogId: integer("blog_id")
       .notNull()
-      .references(() => users.id),
+      .references(() => blogs.id, { onDelete: "cascade" }),
+    userId: varchar("user_id", { length: 255 })
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
     createdAt: timestamp("created_at", { withTimezone: true })
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
-    updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(
-      () => new Date()
-    ),
   },
-  (example) => ({
-    createdByIdIdx: index("created_by_idx").on(example.createdById),
-    nameIndex: index("name_idx").on(example.name),
-  })
+  (table) => ({
+    primaryKey: primaryKey({
+      columns: [table.blogId, table.userId],
+    }),
+  }),
 );
+
+export enum Role {
+  ADMIN = "admin",
+  USER = "user",
+}
 
 export const users = createTable("user", {
   id: varchar("id", { length: 255 })
@@ -46,6 +79,7 @@ export const users = createTable("user", {
     .$defaultFn(() => crypto.randomUUID()),
   name: varchar("name", { length: 255 }),
   email: varchar("email", { length: 255 }).notNull(),
+  role: varchar("role", { length: 255 }).$type<Role>().default(Role.USER),
   emailVerified: timestamp("email_verified", {
     mode: "date",
     withTimezone: true,
@@ -83,7 +117,7 @@ export const accounts = createTable(
       columns: [account.provider, account.providerAccountId],
     }),
     userIdIdx: index("account_user_id_idx").on(account.userId),
-  })
+  }),
 );
 
 export const accountsRelations = relations(accounts, ({ one }) => ({
@@ -106,7 +140,7 @@ export const sessions = createTable(
   },
   (session) => ({
     userIdIdx: index("session_user_id_idx").on(session.userId),
-  })
+  }),
 );
 
 export const sessionsRelations = relations(sessions, ({ one }) => ({
@@ -125,5 +159,5 @@ export const verificationTokens = createTable(
   },
   (vt) => ({
     compoundKey: primaryKey({ columns: [vt.identifier, vt.token] }),
-  })
+  }),
 );

@@ -1,4 +1,4 @@
-import LandingScreen from "./_components/landing-screen";
+import LandingScreen from "../_components/landing-screen";
 
 export default async function Home() {
   return (

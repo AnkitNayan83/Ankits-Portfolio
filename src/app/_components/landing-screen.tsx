@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Link from "next/link";
 import { useState } from "react";
 
 export default function LandingScreen() {
@@ -56,39 +55,6 @@ export default function LandingScreen() {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white">
-      {/* Navbar */}
-      <nav className="flex items-center justify-between bg-gray-800 p-5 shadow-lg">
-        <span className="flex items-baseline space-x-6">
-          <h1 className="text-2xl font-bold">Ankit Nayan</h1>
-          <Link
-            href={"/blogs"}
-            className="text-lg font-[600] underline hover:text-blue-500"
-          >
-            Blogs
-          </Link>
-        </span>
-        <div className="space-x-6">
-          <Link href="#about" className="hover:text-blue-400">
-            About
-          </Link>
-          <Link href="#skills" className="hover:text-blue-400">
-            Skills
-          </Link>
-          <Link href="#experience" className="hover:text-blue-400">
-            Experience
-          </Link>
-          <Link href="#projects" className="hover:text-blue-400">
-            Projects
-          </Link>
-          <Link href="#coding" className="hover:text-blue-400">
-            Coding Platforms
-          </Link>
-          <Link href="#contact" className="hover:text-blue-400">
-            Contact
-          </Link>
-        </div>
-      </nav>
-
       {/* Hero Section */}
       <section className="flex h-screen flex-col items-center justify-center px-5 text-center">
         <motion.img
