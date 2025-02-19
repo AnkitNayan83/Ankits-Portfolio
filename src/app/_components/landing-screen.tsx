@@ -58,7 +58,15 @@ export default function LandingScreen() {
     <div className="min-h-screen bg-gray-900 text-white">
       {/* Navbar */}
       <nav className="flex items-center justify-between bg-gray-800 p-5 shadow-lg">
-        <h1 className="text-2xl font-bold">Ankit Nayan</h1>
+        <span className="flex items-baseline space-x-6">
+          <h1 className="text-2xl font-bold">Ankit Nayan</h1>
+          <Link
+            href={"/blogs"}
+            className="text-lg font-[600] underline hover:text-blue-500"
+          >
+            Blogs
+          </Link>
+        </span>
         <div className="space-x-6">
           <Link href="#about" className="hover:text-blue-400">
             About
