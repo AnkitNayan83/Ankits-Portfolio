@@ -20,7 +20,7 @@ export const createTable = pgTableCreator((name) => `ankits_portfolio_${name}`);
 
 export const blogs = createTable("blogs", {
   id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
-  title: varchar("name", { length: 256 }),
+  title: varchar("title", { length: 256 }),
   content: text("content"),
   createdAt: timestamp("created_at", { withTimezone: true })
     .default(sql`CURRENT_TIMESTAMP`)

@@ -1,0 +1,1 @@
+ALTER TABLE "ankits_portfolio_blogs" RENAME COLUMN "name" TO "title";

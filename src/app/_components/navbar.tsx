@@ -1,9 +1,10 @@
+import { UserAvatar } from "@/components/user-avatar";
 import Link from "next/link";
 
 const Navbar = () => {
   return (
     <nav className="flex items-center justify-between bg-gray-800 p-5 text-white shadow-lg">
-      <span className="flex items-baseline space-x-6">
+      <span className="flex items-center space-x-6">
         <h1 className="text-2xl font-bold">Ankit Nayan</h1>
         <Link
           href={"/blogs"}
@@ -11,6 +12,7 @@ const Navbar = () => {
         >
           Blogs
         </Link>
+        <UserAvatar />
       </span>
       <div className="space-x-6">
         <Link href="/#about" className="hover:text-blue-400">
