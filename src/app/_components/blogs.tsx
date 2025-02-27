@@ -1,29 +1,44 @@
 "use client";
 
-import { AuthModal } from "@/components/modals/auth.modal";
-import { useClientAuth } from "@/hooks/useClientAuth";
-import { useState } from "react";
+import { BlogCard } from "@/components/blog/blog-card";
+import { api } from "@/trpc/react";
 
 export const Blogs = () => {
-  const session = useClientAuth();
-  const [showAuthModal, setShowAuthModal] = useState(false);
+  const { data, error, isLoading } = api.blog.getBlogs.useQuery();
 
-  const toggleAuthModal = () => setShowAuthModal((prev) => !prev);
+  if (error) {
+    return (
+      <div className="flex h-[90vh] w-full items-center justify-center">
+        <span className="text-2xl font-bold text-white">Server Down 📉😓</span>
+      </div>
+    );
+  }
 
   return (
     <div className="flex justify-center">
-      <div
-        onClick={toggleAuthModal}
-        className="mt-6 w-full max-w-[848px] rounded-lg border-2 border-white"
-      >
-        <p className="text-white">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore ea
-          eaque aspernatur asperiores eos pariatur libero non aperiam molestiae
-          repudiandae soluta in hic ipsa, aliquam animi molestias ipsum delectus
-          maiores!
-        </p>
+      <div className="w-full max-w-[848px] p-4">
+        {isLoading ? (
+          // Skeleton Loader
+          <div className="space-y-6">
+            {[...Array(3)].map((_, i) => (
+              <div
+                key={i}
+                className="h-[200px] w-full animate-pulse rounded-lg bg-gray-700 p-4"
+              >
+                <div className="mb-3 h-6 w-3/4 rounded bg-gray-600"></div>
+                <div className="mb-2 h-4 w-full rounded bg-gray-600"></div>
+                <div className="mb-2 h-4 w-5/6 rounded bg-gray-600"></div>
+                <div className="h-4 w-2/3 rounded bg-gray-600"></div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          // Blog Cards
+          <div className="space-y-6">
+            {data?.map((blog) => <BlogCard key={blog.id} blog={blog} />)}
+          </div>
+        )}
       </div>
-      {showAuthModal && <AuthModal toggleAuthModal={toggleAuthModal} />}
     </div>
   );
 };
