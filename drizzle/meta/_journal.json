@@ -15,6 +15,13 @@
       "when": 1740203427412,
       "tag": "0001_windy_iceman",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1740630944504,
+      "tag": "0002_curvy_natasha_romanoff",
+      "breakpoints": true
     }
   ]
 }

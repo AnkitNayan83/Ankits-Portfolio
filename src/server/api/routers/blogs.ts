@@ -1,9 +1,10 @@
-import { blogs } from "@/server/db/schema";
+import { blogs, comments, likes, replies } from "@/server/db/schema";
+import { blogsCommentSchema } from "@/zodSchemas/blogs-comment.schema";
 import {
   createBlogSchema,
   updateBlogSchema,
 } from "@/zodSchemas/create-blog.schema";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 
@@ -94,5 +95,94 @@ export const blogRouter = createTRPCRouter({
           message: errMesg,
         };
       }
+    }),
+
+  likeBlog: protectedProcedure
+    .input(
+      z.object({
+        blogId: z.number(),
+        type: z.enum(["like", "unlike"]),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      if (input.type === "like") {
+        ctx.db.insert(likes).values({
+          blogId: input.blogId,
+          userId: ctx.session.user.id,
+        });
+        return {
+          success: true,
+          message: "Blog liked",
+        };
+      } else if (input.type === "unlike") {
+        ctx.db
+          .delete(likes)
+          .where(
+            and(
+              eq(likes.blogId, input.blogId),
+              eq(likes.userId, ctx.session.user.id),
+            ),
+          );
+        return {
+          success: true,
+          message: "Blog unliked",
+        };
+      } else {
+        return {
+          success: false,
+          message: "Invalid type",
+        };
+      }
+    }),
+
+  commentOnBlog: protectedProcedure
+    .input(blogsCommentSchema)
+    .mutation(async ({ ctx, input }) => {
+      await ctx.db.insert(comments).values({
+        blogId: input.blogId,
+        userId: ctx.session.user.id,
+        content: input.content,
+      });
+
+      return {
+        success: true,
+        message: "Comment added",
+      };
+    }),
+
+  getComments: publicProcedure
+    .input(z.object({ blogId: z.number() }))
+    .query(async ({ ctx, input }) => {
+      const blogComments = await ctx.db.query.comments.findMany({
+        where: eq(comments.blogId, input.blogId),
+        orderBy: (comments, { desc }) => [desc(comments.createdAt)],
+      });
+
+      return blogComments ?? null;
+    }),
+
+  replyOnComment: protectedProcedure
+    .input(z.object({ commentId: z.number(), content: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      await ctx.db.insert(replies).values({
+        commentId: input.commentId,
+        userId: ctx.session.user.id,
+        content: input.content,
+      });
+
+      return {
+        success: true,
+        message: "Reply added",
+      };
+    }),
+  getRepliesOnComments: publicProcedure
+    .input(z.object({ commentId: z.number() }))
+    .query(async ({ ctx, input }) => {
+      const commentReplies = await ctx.db.query.replies.findMany({
+        where: eq(replies.commentId, input.commentId),
+        orderBy: (replies, { desc }) => [desc(replies.createdAt)],
+      });
+
+      return commentReplies ?? null;
     }),
 });

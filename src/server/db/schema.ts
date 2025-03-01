@@ -41,6 +41,23 @@ export const comments = createTable("comments", {
   ),
 });
 
+export const replies = createTable("replies", {
+  id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
+  commentId: integer("comment_id")
+    .notNull()
+    .references(() => comments.id, { onDelete: "cascade" }),
+  userId: varchar("user_id", { length: 255 })
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  content: text("content").notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(
+    () => new Date(),
+  ),
+});
+
 export const likes = createTable(
   "likes",
   {

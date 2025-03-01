@@ -17,6 +17,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import MDEditor from "@uiw/react-md-editor";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { type z } from "zod";
 
 interface CreateBlogFormProps {
@@ -38,7 +39,7 @@ export const CreateBlogForm = ({ type, blog }: CreateBlogFormProps) => {
 
   const createBlogMutation = api.blog.createBlog.useMutation({
     onError: (error) => {
-      alert(error.message);
+      toast.error(error.message);
     },
     onSuccess: () => {
       void utils.blog.getBlogs.invalidate();
@@ -49,7 +50,7 @@ export const CreateBlogForm = ({ type, blog }: CreateBlogFormProps) => {
 
   const updateBlogMutation = api.blog.updateBlog.useMutation({
     onError: (error) => {
-      alert(error.message);
+      toast.error(error.message);
     },
     onSuccess: () => {
       void utils.blog.getBlogs.invalidate();

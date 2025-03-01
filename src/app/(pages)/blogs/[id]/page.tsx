@@ -1,9 +1,12 @@
 "use client";
 
+import { BlogComments } from "@/app/_components/blog-comments";
+import { CommentForm } from "@/app/_components/comment-form";
 import { Button } from "@/components/ui/button";
 import { useClientAuth } from "@/hooks/useClientAuth";
 import { api } from "@/trpc/react";
 import { ArrowLeft } from "lucide-react";
+import Head from "next/head";
 import { useParams, useRouter } from "next/navigation";
 import ReactMarkDown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -39,6 +42,12 @@ const SingleBlogPage = () => {
 
   return (
     <div className="flex justify-center text-white">
+      <Head>
+        <title>{data?.title}</title>
+        <meta name="description" content={data?.content || ""} />
+        <meta property="og:title" content={data?.title || ""} />
+        <meta property="og:description" content={data?.content || ""} />
+      </Head>
       <div className="w-full max-w-[1024px] py-4">
         {isLoading ? (
           <div className="h-[calc(100vh_-_200px)] w-full animate-pulse rounded-lg bg-gray-700 p-4">
@@ -70,6 +79,11 @@ const SingleBlogPage = () => {
                 Edit
               </Button>
             )}
+
+            <div className="flex flex-col py-4">
+              <CommentForm blogId={id} />
+              <BlogComments blogId={id} />
+            </div>
           </div>
         )}
       </div>

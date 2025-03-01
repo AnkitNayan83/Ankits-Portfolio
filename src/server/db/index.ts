@@ -19,3 +19,5 @@ if (env.NODE_ENV !== "production") globalForDb.conn = conn;
 export const db = drizzle(conn, { schema });
 
 export type BlogTable = InferSelectModel<typeof schema.blogs>;
+export type CommentTable = InferSelectModel<typeof schema.comments>;
+export type ReplyTable = InferSelectModel<typeof schema.replies>;
