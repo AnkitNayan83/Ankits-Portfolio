@@ -1,10 +1,10 @@
-import { blogs, comments, likes, replies } from "@/server/db/schema";
+import { blogs, comments, likes, replies, users } from "@/server/db/schema";
 import { blogsCommentSchema } from "@/zodSchemas/blogs-comment.schema";
 import {
   createBlogSchema,
   updateBlogSchema,
 } from "@/zodSchemas/create-blog.schema";
-import { and, eq } from "drizzle-orm";
+import { and, desc, eq } from "drizzle-orm";
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 
@@ -153,12 +153,27 @@ export const blogRouter = createTRPCRouter({
   getComments: publicProcedure
     .input(z.object({ blogId: z.number() }))
     .query(async ({ ctx, input }) => {
-      const blogComments = await ctx.db.query.comments.findMany({
-        where: eq(comments.blogId, input.blogId),
-        orderBy: (comments, { desc }) => [desc(comments.createdAt)],
-      });
+      const blogComments = await ctx.db
+        .select({
+          comment: comments,
+          user: {
+            name: users.name,
+            id: users.id,
+            image: users.image,
+          },
+        })
+        .from(comments)
+        .innerJoin(users, eq(users.id, comments.userId))
+        .where(eq(comments.blogId, input.blogId))
+        .orderBy(desc(comments.createdAt))
+        .execute();
 
-      return blogComments ?? null;
+      const commentsWithUser = blogComments.map((comment) => ({
+        ...comment.comment,
+        user: comment.user,
+      }));
+
+      return commentsWithUser ?? null;
     }),
 
   replyOnComment: protectedProcedure
@@ -178,11 +193,26 @@ export const blogRouter = createTRPCRouter({
   getRepliesOnComments: publicProcedure
     .input(z.object({ commentId: z.number() }))
     .query(async ({ ctx, input }) => {
-      const commentReplies = await ctx.db.query.replies.findMany({
-        where: eq(replies.commentId, input.commentId),
-        orderBy: (replies, { desc }) => [desc(replies.createdAt)],
-      });
+      const commentReplies = await ctx.db
+        .select({
+          reply: replies,
+          user: {
+            name: users.name,
+            id: users.id,
+            image: users.image,
+          },
+        })
+        .from(replies)
+        .innerJoin(users, eq(users.id, replies.userId))
+        .where(eq(replies.commentId, input.commentId))
+        .orderBy(desc(replies.createdAt))
+        .execute();
 
-      return commentReplies ?? null;
+      const commentRepliesWithUser = commentReplies.map((reply) => ({
+        ...reply.reply,
+        user: reply.user,
+      }));
+
+      return commentRepliesWithUser ?? null;
     }),
 });

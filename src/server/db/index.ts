@@ -20,4 +20,11 @@ export const db = drizzle(conn, { schema });
 
 export type BlogTable = InferSelectModel<typeof schema.blogs>;
 export type CommentTable = InferSelectModel<typeof schema.comments>;
+export type CommentWithUser = CommentTable & {
+  user: { name: string | null; id: string; image: string | null };
+};
 export type ReplyTable = InferSelectModel<typeof schema.replies>;
+export type ReplyWithUser = ReplyTable & {
+  user: { name: string | null; id: string; image: string | null };
+};
+export type LikeTable = InferSelectModel<typeof schema.likes>;

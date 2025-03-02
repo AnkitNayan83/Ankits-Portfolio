@@ -1,38 +1,44 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { useModal } from "@/hooks/useModal";
 import { signIn } from "next-auth/react";
 
-interface AuthModalProps {
-  toggleAuthModal: () => void;
-}
+export const AuthModal = () => {
+  const { isOpen, type, onClose, data } = useModal();
 
-export const AuthModal = ({ toggleAuthModal }: AuthModalProps) => {
   const handleGoogleSignIn = async () => {
     await signIn("google", {
-      callbackUrl: "/blogs",
+      callbackUrl: data?.callBackUrl ?? "/blogs",
     });
   };
 
+  if (!isOpen || type !== "auth") return null;
+
   return (
     <div
-      onClick={toggleAuthModal}
-      className="fixed inset-0 flex items-center justify-center bg-black/50"
+      onClick={() => onClose()}
+      className="fixed inset-0 flex items-center justify-center bg-black/50 text-white"
     >
       <div
-        className="relative rounded bg-white p-8 text-center shadow-md"
+        className="relative rounded bg-gray-900 p-8 text-center shadow-md"
         onClick={(e) => e.stopPropagation()}
       >
         <button
-          onClick={toggleAuthModal}
+          onClick={() => onClose()}
           className="absolute right-2 top-2 text-gray-500 hover:text-gray-800"
         >
           ×
         </button>
         <h2 className="mb-4 text-xl font-semibold">
-          Log in to react to this blog
+          Please log in to interact with the blog
         </h2>
-        <Button onClick={handleGoogleSignIn}>Sign in with Google</Button>
+        <Button
+          className="bg-white text-black hover:bg-white"
+          onClick={handleGoogleSignIn}
+        >
+          Sign in with Google
+        </Button>
       </div>
     </div>
   );
