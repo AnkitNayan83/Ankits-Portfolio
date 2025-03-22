@@ -1,9 +1,17 @@
+import { CommentTable, ReplyTable } from "@/server/db";
 import { create } from "zustand";
 
-export type ModalType = "auth";
+export type ModalType =
+  | "auth"
+  | "editComment"
+  | "deleteComment"
+  | "deleteReply"
+  | "editReply";
 
 interface ModalData {
   callBackUrl?: string;
+  comment?: CommentTable;
+  reply?: ReplyTable;
 }
 
 interface ModalStore {

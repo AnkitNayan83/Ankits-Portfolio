@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { CommentWithUser } from "@/server/db";
 import { api } from "@/trpc/react";
-import { X } from "lucide-react";
+import { Loader2, X } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import { ReplyForm } from "./reply-form";
@@ -65,19 +65,21 @@ export const BlogComments = ({ blogId }: { blogId: number }) => {
     return (
       <div className="mb-4 w-full rounded-md bg-black/50 p-4">
         <div className="flex items-start justify-between">
-          <div className="flex items-start gap-2">
-            <Image
-              src={comment.user.image || ""} // Add a default avatar fallback
-              alt={`${comment.user.name}'s avatar`}
-              width={30}
-              height={30}
-              className="rounded-full"
-            />
-            <div className="flex flex-col">
-              <h4 className="font-semibold">{comment.user.name}</h4>
-              <p className="text-sm text-gray-500">
-                {new Date(comment.createdAt).toLocaleDateString()}
-              </p>
+          <div className="flex items-center justify-between">
+            <div className="flex items-start gap-2">
+              <Image
+                src={comment.user.image || ""}
+                alt={`${comment.user.name}'s avatar`}
+                width={30}
+                height={30}
+                className="rounded-full"
+              />
+              <div className="flex flex-col">
+                <h4 className="font-semibold">{comment.user.name}</h4>
+                <p className="text-sm text-gray-500">
+                  {new Date(comment.createdAt).toLocaleDateString()}
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -126,7 +128,11 @@ export const BlogComments = ({ blogId }: { blogId: number }) => {
 
         {isExpanded && (
           <div className="ml-6 mt-4 border-l-2 border-gray-200 pl-4">
-            {replyLoading && <p className="text-sm">Loading replies...</p>}
+            {replyLoading && (
+              <p className="text-sm">
+                <Loader2 className="inline-block h-4 w-4 animate-spin" />
+              </p>
+            )}
             {replyError && (
               <p className="text-sm text-red-500">Error loading replies</p>
             )}

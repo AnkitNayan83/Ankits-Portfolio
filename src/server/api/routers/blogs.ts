@@ -1,5 +1,12 @@
 import { blogs, comments, likes, replies, users } from "@/server/db/schema";
-import { blogsCommentSchema } from "@/zodSchemas/blogs-comment.schema";
+import {
+  blogsCommentSchema,
+  commentReplySchema,
+  deleteCommentSchema,
+  deleteReplySchema,
+  editCommentSchema,
+  editReplySchema,
+} from "@/zodSchemas/blogs-comment.schema";
 import {
   createBlogSchema,
   updateBlogSchema,
@@ -176,8 +183,47 @@ export const blogRouter = createTRPCRouter({
       return commentsWithUser ?? null;
     }),
 
+  editComment: protectedProcedure
+    .input(editCommentSchema)
+    .mutation(async ({ ctx, input }) => {
+      await ctx.db
+        .update(comments)
+        .set({
+          content: input.content,
+        })
+        .where(
+          and(
+            eq(comments.id, input.commentId),
+            eq(comments.userId, ctx.session.user.id),
+          ),
+        );
+
+      return {
+        success: true,
+        message: "Comment updated",
+      };
+    }),
+
+  deleteComment: protectedProcedure
+    .input(deleteCommentSchema)
+    .mutation(async ({ ctx, input }) => {
+      await ctx.db
+        .delete(comments)
+        .where(
+          and(
+            eq(comments.id, input.commentId),
+            eq(comments.userId, ctx.session.user.id),
+          ),
+        );
+
+      return {
+        success: true,
+        message: "Comment deleted",
+      };
+    }),
+
   replyOnComment: protectedProcedure
-    .input(z.object({ commentId: z.number(), content: z.string() }))
+    .input(commentReplySchema)
     .mutation(async ({ ctx, input }) => {
       await ctx.db.insert(replies).values({
         commentId: input.commentId,
@@ -214,5 +260,44 @@ export const blogRouter = createTRPCRouter({
       }));
 
       return commentRepliesWithUser ?? null;
+    }),
+
+  editCommentReply: protectedProcedure
+    .input(editReplySchema)
+    .mutation(async ({ ctx, input }) => {
+      await ctx.db
+        .update(replies)
+        .set({
+          content: input.content,
+        })
+        .where(
+          and(
+            eq(replies.id, input.replyId),
+            eq(replies.userId, ctx.session.user.id),
+          ),
+        );
+
+      return {
+        success: true,
+        message: "Reply updated",
+      };
+    }),
+
+  deleteCommentReply: protectedProcedure
+    .input(deleteReplySchema)
+    .mutation(async ({ ctx, input }) => {
+      await ctx.db
+        .delete(replies)
+        .where(
+          and(
+            eq(replies.id, input.replyId),
+            eq(replies.userId, ctx.session.user.id),
+          ),
+        );
+
+      return {
+        success: true,
+        message: "Reply deleted",
+      };
     }),
 });
