@@ -189,7 +189,7 @@ export const BlogComments = ({ blogId }: { blogId: number }) => {
 
   return (
     <div className="mt-8">
-      <h3 className="mb-4 text-xl font-bold">Comments</h3>
+      <h3 className="mb-4 text-xl font-bold">Comments 🙋‍♂️🙋‍♀️</h3>
 
       {commentLoading && <p>Loading comments...</p>}
       {commentError && <p className="text-red-500">Error loading comments</p>}
