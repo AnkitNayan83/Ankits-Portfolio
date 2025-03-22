@@ -20,7 +20,7 @@ export const Blogs = () => {
         {isLoading ? (
           // Skeleton Loader
           <div className="space-y-6">
-            {[...Array(3)].map((_, i) => (
+            {Array.from({ length: 3 }, (_, i) => (
               <div
                 key={i}
                 className="h-[200px] w-full animate-pulse rounded-lg bg-gray-700 p-4"

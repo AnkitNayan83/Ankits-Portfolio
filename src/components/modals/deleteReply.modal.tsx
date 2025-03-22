@@ -3,7 +3,7 @@
 import { useModal } from "@/hooks/useModal";
 
 export const DeleteReplyModal = () => {
-  const { isOpen, type, onClose, data } = useModal();
+  const { isOpen, type } = useModal();
 
   if (!isOpen || type !== "deleteReply") return null;
 

@@ -10,7 +10,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { BlogTable } from "@/server/db";
+import { type BlogTable } from "@/server/db";
 import { api } from "@/trpc/react";
 import { createBlogSchema } from "@/zodSchemas/create-blog.schema";
 import { zodResolver } from "@hookform/resolvers/zod";

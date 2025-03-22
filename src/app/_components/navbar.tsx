@@ -16,7 +16,9 @@ const Navbar = () => {
     <nav className="sticky top-0 flex flex-wrap items-center justify-between bg-gray-800 p-4 text-white shadow-lg">
       {/* Logo and title */}
       <div className="flex items-center">
-        <h1 className="text-xl font-bold md:text-2xl">Ankit Nayan</h1>
+        <Link href="/" className="hover:text-blue-400">
+          <h1 className="text-xl font-bold md:text-2xl">Ankit Nayan</h1>
+        </Link>
       </div>
 
       {/* Blog link - visible on all screens */}

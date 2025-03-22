@@ -4,6 +4,7 @@ import { BlogComments } from "@/app/_components/blog-comments";
 import { CommentForm } from "@/app/_components/comment-form";
 import { Button } from "@/components/ui/button";
 import { useClientAuth } from "@/hooks/useClientAuth";
+import { Role } from "@/server/db/schema";
 import { api } from "@/trpc/react";
 import { ArrowLeft } from "lucide-react";
 import Head from "next/head";
@@ -44,9 +45,9 @@ const SingleBlogPage = () => {
     <div className="flex justify-center px-3 text-white md:px-0">
       <Head>
         <title>{data?.title}</title>
-        <meta name="description" content={data?.content || ""} />
-        <meta property="og:title" content={data?.title || ""} />
-        <meta property="og:description" content={data?.content || ""} />
+        <meta name="description" content={data?.content ?? ""} />
+        <meta property="og:title" content={data?.title ?? ""} />
+        <meta property="og:description" content={data?.content ?? ""} />
       </Head>
       <div className="w-full max-w-[1024px] py-4">
         {isLoading ? (
@@ -71,7 +72,7 @@ const SingleBlogPage = () => {
                 {data?.content}
               </ReactMarkDown>
             </div>
-            {session && session?.user?.role === "admin" && (
+            {session && session?.user?.role === Role.ADMIN && (
               <Button
                 onClick={() => router.push(`/blogs/update/${data?.id}`)}
                 className="w-[25%] bg-green-800 hover:bg-green-500"

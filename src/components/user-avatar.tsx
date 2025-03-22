@@ -31,7 +31,7 @@ export const UserAvatar = () => {
     <DropdownMenu>
       <DropdownMenuTrigger>
         <Image
-          src={session.user?.image || ""}
+          src={session.user?.image ?? ""}
           alt="user"
           width={35}
           height={35}
@@ -41,7 +41,7 @@ export const UserAvatar = () => {
       <DropdownMenuContent align="start">
         <DropdownMenuItem
           onClick={() => {
-            signOut();
+            void signOut();
           }}
         >
           Logout

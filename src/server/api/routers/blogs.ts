@@ -1,4 +1,11 @@
-import { blogs, comments, likes, replies, users } from "@/server/db/schema";
+import {
+  blogs,
+  comments,
+  likes,
+  replies,
+  Role,
+  users,
+} from "@/server/db/schema";
 import {
   blogsCommentSchema,
   commentReplySchema,
@@ -37,7 +44,7 @@ export const blogRouter = createTRPCRouter({
   createBlog: protectedProcedure
     .input(createBlogSchema)
     .mutation(async ({ ctx, input }) => {
-      if (ctx.session.user.role !== "admin") {
+      if (ctx.session.user.role !== Role.ADMIN) {
         return {
           success: false,
           message: "Unauthorized",
@@ -70,7 +77,7 @@ export const blogRouter = createTRPCRouter({
   updateBlog: protectedProcedure
     .input(updateBlogSchema)
     .mutation(async ({ ctx, input }) => {
-      if (ctx.session.user.role !== "admin") {
+      if (ctx.session.user.role !== Role.ADMIN) {
         return {
           success: false,
           message: "Unauthorized",

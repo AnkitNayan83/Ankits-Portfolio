@@ -1,6 +1,6 @@
 "use client";
 
-import { BlogTable } from "@/server/db";
+import { type BlogTable } from "@/server/db";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";

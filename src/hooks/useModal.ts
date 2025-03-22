@@ -1,4 +1,4 @@
-import { CommentTable, ReplyTable } from "@/server/db";
+import { type CommentTable, type ReplyTable } from "@/server/db";
 import { create } from "zustand";
 
 export type ModalType =

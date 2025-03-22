@@ -12,5 +12,7 @@ export const login = async (provider: ProviderEnum) => {
     await signIn(provider, {
       callbackUrl: `/blogs`,
     });
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 };

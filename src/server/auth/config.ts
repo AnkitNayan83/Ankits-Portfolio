@@ -5,7 +5,7 @@ import GoogleProvider from "next-auth/providers/google";
 import { db } from "@/server/db";
 import {
   accounts,
-  Role,
+  type Role,
   sessions,
   users,
   verificationTokens,

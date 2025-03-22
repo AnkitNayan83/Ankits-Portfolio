@@ -19,7 +19,7 @@ export default function NotFound() {
       </svg>
       <h1 className="text-4xl font-bold">404</h1>
       <p className="mt-2 text-lg">
-        Oops! The page you're looking for doesn't exist.
+        Oops! The page you&apos;re looking for doesn&apos;t exist.
       </p>
       <Link className="mt-3 rounded-xl bg-gray-800 p-3" href={"/"}>
         Back to home

@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { CommentWithUser } from "@/server/db";
+import { type CommentWithUser } from "@/server/db";
 import { api } from "@/trpc/react";
 import { Loader2, X } from "lucide-react";
 import Image from "next/image";
@@ -14,8 +14,6 @@ export const BlogComments = ({ blogId }: { blogId: number }) => {
     isLoading: commentLoading,
     error: commentError,
   } = api.blog.getComments.useQuery({ blogId }, { enabled: !!blogId });
-
-  const [showReplyForm, setShowReplyForm] = useState(false);
   const [expandedComments, setExpandedComments] = useState<number[]>([]);
 
   const toggleCommentExpansion = (commentId: number) => {
@@ -68,7 +66,7 @@ export const BlogComments = ({ blogId }: { blogId: number }) => {
           <div className="flex items-center justify-between">
             <div className="flex items-start gap-2">
               <Image
-                src={comment.user.image || ""}
+                src={comment.user.image ?? ""}
                 alt={`${comment.user.name}'s avatar`}
                 width={30}
                 height={30}
@@ -149,7 +147,7 @@ export const BlogComments = ({ blogId }: { blogId: number }) => {
                       {reply.user ? (
                         <>
                           <Image
-                            src={reply.user.image || "/default-avatar.png"}
+                            src={reply.user.image ?? "/default-avatar.png"}
                             alt={`${reply.user.name}'s avatar`}
                             width={24}
                             height={24}

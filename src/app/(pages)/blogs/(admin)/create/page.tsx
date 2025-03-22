@@ -1,9 +1,10 @@
 import { CreateBlogForm } from "@/app/_components/create-blog-form";
 import { auth } from "@/server/auth";
+import { Role } from "@/server/db/schema";
 
 const CreateBlog = async () => {
   const session = await auth();
-  if (session?.user?.role !== "admin") {
+  if (session?.user?.role !== Role.ADMIN) {
     return <div className="text-red-500">Unauthorized</div>;
   }
   return (
