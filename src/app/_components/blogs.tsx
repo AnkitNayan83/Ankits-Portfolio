@@ -34,7 +34,7 @@ export const Blogs = () => {
           </div>
         ) : (
           // Blog Cards
-          <div className="space-y-6">
+          <div className="flex flex-col gap-y-4">
             {data?.map((blog) => <BlogCard key={blog.id} blog={blog} />)}
           </div>
         )}

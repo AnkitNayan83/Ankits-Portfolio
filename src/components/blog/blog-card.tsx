@@ -12,13 +12,13 @@ interface BlogCardProps {
 export const BlogCard = ({ blog }: BlogCardProps) => {
   return (
     <Link href={`/blogs/${blog.id}`}>
-      <div className="relative w-full cursor-pointer overflow-hidden rounded-t-xl border-l-[1px] border-r-[1px] border-t-[1px] border-gray-200 p-4 text-white">
-        <div className="mb-4 text-2xl font-semibold">
+      <div className="relative mb-5 w-full cursor-pointer overflow-hidden rounded-t-xl bg-gradient-to-br from-[#151d2f] to-[#1f2937] p-0 text-white">
+        <div className="mb-4 p-3 text-2xl font-semibold">
           <ReactMarkdown>{blog.title}</ReactMarkdown>
         </div>
 
         <div className="relative max-h-[200px] overflow-hidden md:max-h-[200px]">
-          <div className="prose prose-lg prose-invert max-w-none">
+          <div className="prose prose-lg prose-invert max-w-none px-3">
             <ReactMarkdown remarkPlugins={[remarkGfm]}>
               {blog.content}
             </ReactMarkdown>

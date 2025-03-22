@@ -4,7 +4,7 @@ import { auth } from "@/server/auth";
 const CreateBlog = async () => {
   const session = await auth();
   if (session?.user?.role !== "admin") {
-    return <div>Unauthorized</div>;
+    return <div className="text-red-500">Unauthorized</div>;
   }
   return (
     <div className="flex w-full justify-center">

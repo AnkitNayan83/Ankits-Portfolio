@@ -1,5 +1,6 @@
 "use client";
 
+import NotFound from "@/app/_components/not-found";
 import { useClientAuth } from "@/hooks/useClientAuth";
 import { useRouter } from "next/navigation";
 
@@ -13,7 +14,9 @@ export default function AdminLayout({
       {session && session?.user?.role === "admin" ? (
         children
       ) : (
-        <div>🚫</div>
+        <div>
+          <NotFound />
+        </div>
       )}{" "}
     </>
   );

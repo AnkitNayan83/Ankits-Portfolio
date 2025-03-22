@@ -41,7 +41,7 @@ const SingleBlogPage = () => {
   }
 
   return (
-    <div className="flex justify-center text-white">
+    <div className="flex justify-center px-3 text-white md:px-0">
       <Head>
         <title>{data?.title}</title>
         <meta name="description" content={data?.content || ""} />

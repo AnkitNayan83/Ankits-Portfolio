@@ -6,7 +6,6 @@ import { signIn } from "next-auth/react";
 
 export const AuthModal = () => {
   const { isOpen, type, onClose, data } = useModal();
-
   const handleGoogleSignIn = async () => {
     await signIn("google", {
       callbackUrl: data?.callBackUrl ?? "/blogs",
@@ -18,7 +17,7 @@ export const AuthModal = () => {
   return (
     <div
       onClick={() => onClose()}
-      className="fixed inset-0 flex items-center justify-center bg-black/50 text-white"
+      className="fixed inset-0 z-10 flex items-center justify-center bg-black/50 text-white"
     >
       <div
         className="relative rounded bg-gray-900 p-8 text-center shadow-md"
@@ -31,7 +30,7 @@ export const AuthModal = () => {
           ×
         </button>
         <h2 className="mb-4 text-xl font-semibold">
-          Please log in to interact with the blog
+          Log in to interact with the blogs
         </h2>
         <Button
           className="bg-white text-black hover:bg-white"

@@ -1,8 +1,10 @@
 "use client";
 
 import { useClientAuth } from "@/hooks/useClientAuth";
+import { useModal } from "@/hooks/useModal";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
+import { Button } from "./ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,11 +14,17 @@ import {
 
 export const UserAvatar = () => {
   const session = useClientAuth();
+  const { onOpen, type } = useModal();
 
-  console.log(session);
+  console.log(type);
+
+  const handleLogin = () => {
+    onOpen("auth", { callBackUrl: `/` });
+    return;
+  };
 
   if (!session) {
-    return null;
+    return <Button onClick={handleLogin}>Login</Button>;
   }
 
   return (
