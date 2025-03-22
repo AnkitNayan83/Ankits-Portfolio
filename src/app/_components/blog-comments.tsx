@@ -138,7 +138,7 @@ export const BlogComments = ({ blogId }: { blogId: number }) => {
             )}
 
             {replyData && replyData.length === 0 && (
-              <p className="text-sm text-gray-500">No replies yet</p>
+              <p className="text-sm text-gray-500">No replies yet 📪</p>
             )}
 
             {replyData && replyData.length > 0 && (
