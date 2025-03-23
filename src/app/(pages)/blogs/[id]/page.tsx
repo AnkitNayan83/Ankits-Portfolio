@@ -1,15 +1,12 @@
 import { SingleBlog } from "@/app/_components/single-blog";
 import { api } from "@/trpc/server";
-import { Metadata, ResolvingMetadata } from "next";
+import { type Metadata } from "next";
 
 type Props = {
   params: Promise<{ id: string }>;
 };
 
-export async function generateMetadata(
-  { params }: Props,
-  parent: ResolvingMetadata,
-): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const resolvedParams = await params;
   const id = parseInt(resolvedParams.id) || 0;
 
@@ -26,7 +23,7 @@ export async function generateMetadata(
   const description = blog.content
     ? blog.content.substring(0, 160).replace(/[#*_`]/g, "")
     : "Blog post";
-  const title = blog.title?.replace(/[#*_`]/g, "") || "Blog Post";
+  const title = blog.title?.replace(/[#*_`]/g, "") ?? "Blog Post";
 
   return {
     title,

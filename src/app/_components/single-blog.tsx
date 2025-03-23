@@ -4,7 +4,7 @@ import { BlogComments } from "@/app/_components/blog-comments";
 import { CommentForm } from "@/app/_components/comment-form";
 import { Button } from "@/components/ui/button";
 import { useClientAuth } from "@/hooks/useClientAuth";
-import { BlogTable } from "@/server/db";
+import { type BlogTable } from "@/server/db";
 import { Role } from "@/server/db/schema";
 import { ArrowLeft } from "lucide-react";
 import Head from "next/head";
