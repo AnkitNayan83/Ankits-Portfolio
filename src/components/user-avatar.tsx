@@ -16,8 +16,6 @@ export const UserAvatar = () => {
   const session = useClientAuth();
   const { onOpen, type } = useModal();
 
-  console.log(type);
-
   const handleLogin = () => {
     onOpen("auth", { callBackUrl: `/` });
     return;
