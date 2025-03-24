@@ -1,9 +1,17 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useModal } from "@/hooks/useModal";
 import { type CommentWithUser } from "@/server/db";
 import { api } from "@/trpc/react";
-import { Loader2, X } from "lucide-react";
+import { EllipsisVertical, Loader2, Pencil, Trash2, X } from "lucide-react";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useState } from "react";
 import { ReplyForm } from "./reply-form";
@@ -15,6 +23,8 @@ export const BlogComments = ({ blogId }: { blogId: number }) => {
     error: commentError,
   } = api.blog.getComments.useQuery({ blogId }, { enabled: !!blogId });
   const [expandedComments, setExpandedComments] = useState<number[]>([]);
+  const session = useSession();
+  const { onOpen } = useModal();
 
   const toggleCommentExpansion = (commentId: number) => {
     setExpandedComments((prev) =>
@@ -63,7 +73,7 @@ export const BlogComments = ({ blogId }: { blogId: number }) => {
     return (
       <div className="mb-4 w-full rounded-md bg-black/50 p-4">
         <div className="flex items-start justify-between">
-          <div className="flex items-center justify-between">
+          <div className="flex w-full items-stretch justify-between">
             <div className="flex items-start gap-2">
               <Image
                 src={comment.user.image ?? ""}
@@ -79,6 +89,33 @@ export const BlogComments = ({ blogId }: { blogId: number }) => {
                 </p>
               </div>
             </div>
+            {session && comment.userId === session.data?.user.id && (
+              <DropdownMenu>
+                <DropdownMenuTrigger className="flex h-fit cursor-pointer justify-start">
+                  <EllipsisVertical className="h-4 w-4" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start">
+                  <DropdownMenuItem
+                    className="flex cursor-pointer items-center gap-x-2"
+                    onClick={() => {
+                      onOpen("editComment", { comment });
+                    }}
+                  >
+                    <Pencil className="h-4 w-4" />
+                    <span>Edit</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => {
+                      onOpen("deleteComment", { comment });
+                    }}
+                    className="flex cursor-pointer items-center gap-x-2 text-red-500 hover:text-red-500"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                    <span>Delete</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
           </div>
         </div>
 

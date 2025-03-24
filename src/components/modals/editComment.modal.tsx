@@ -6,6 +6,7 @@ import { api } from "@/trpc/react";
 import { editCommentSchema } from "@/zodSchemas/blogs-comment.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { X } from "lucide-react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { type z } from "zod";
@@ -23,6 +24,15 @@ export const EditCommentModal = () => {
       commentId: data?.comment?.id ?? undefined,
     },
   });
+
+  useEffect(() => {
+    if (data?.comment) {
+      form.reset({
+        content: data.comment.content,
+        commentId: data.comment.id,
+      });
+    }
+  }, [data?.comment, form.reset]);
 
   const editCommentMutation = api.blog.editComment.useMutation({
     onError: (error) => {
@@ -47,10 +57,10 @@ export const EditCommentModal = () => {
   return (
     <div
       onClick={() => onClose()}
-      className="fixed inset-0 flex items-center justify-center bg-black/50 text-white"
+      className="fixed inset-0 z-10 flex items-center justify-center bg-black/50 text-white"
     >
       <div
-        className="relative rounded bg-gray-900 p-8 text-center shadow-md"
+        className="relative w-full max-w-[500px] rounded bg-gray-900 p-8 text-center shadow-md"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -70,11 +80,7 @@ export const EditCommentModal = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Textarea
-                      className="h-[150px] w-full"
-                      {...field}
-                      placeholder="share your thaughts 💭"
-                    />
+                    <Textarea className="h-[150px] w-full" {...field} />
                   </FormControl>
                 </FormItem>
               )}

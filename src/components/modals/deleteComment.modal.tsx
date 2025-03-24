@@ -5,6 +5,7 @@ import { api } from "@/trpc/react";
 import { deleteCommentSchema } from "@/zodSchemas/blogs-comment.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { X } from "lucide-react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { type z } from "zod";
@@ -21,6 +22,14 @@ export const DeleteCommentModal = () => {
       commentId: data?.comment?.id ?? undefined,
     },
   });
+
+  useEffect(() => {
+    if (data?.comment) {
+      form.reset({
+        commentId: data.comment.id,
+      });
+    }
+  }, [data?.comment, form.reset]);
 
   const deleteCommentMutation = api.blog.deleteComment.useMutation({
     onError: (error) => {
@@ -45,7 +54,7 @@ export const DeleteCommentModal = () => {
   return (
     <div
       onClick={() => onClose()}
-      className="fixed inset-0 flex items-center justify-center bg-black/50 text-white"
+      className="fixed inset-0 z-10 flex items-center justify-center bg-black/50 text-white"
     >
       <div
         className="relative rounded bg-gray-900 p-8 text-center shadow-md"
@@ -61,7 +70,7 @@ export const DeleteCommentModal = () => {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-col space-y-2"
+            className="flex items-center justify-between gap-x-3"
           >
             <h1>Are you sure you want to delete this comment?</h1>
 
