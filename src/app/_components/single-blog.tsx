@@ -22,7 +22,7 @@ export const SingleBlog = ({ blog }: { blog: BlogTable | null }) => {
   }
 
   return (
-    <div className="flex justify-center px-3 text-white md:px-0">
+    <div className="flex justify-center px-3 text-white">
       <Head>
         <title>{blog?.title}</title>
         <meta name="description" content={blog?.content ?? ""} />
