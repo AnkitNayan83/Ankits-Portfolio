@@ -10,7 +10,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const resolvedParams = await params;
   const id = parseInt(resolvedParams.id) || 0;
 
-  // Fetch the blog data
   const blog = await api.blog.getBlog({ id });
 
   if (!blog) {
@@ -19,7 +18,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
-  // Create a clean description from content (no markdown)
   const description = blog.content
     ? blog.content.substring(0, 160).replace(/[#*_`]/g, "")
     : "Blog post";
@@ -38,6 +36,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       card: "summary_large_image",
       title,
       description: description,
+      images: ["https://www.ankitnaya.tech/logo.png"],
     },
   };
 }
