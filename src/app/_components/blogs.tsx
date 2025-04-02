@@ -16,7 +16,7 @@ export const Blogs = () => {
 
   return (
     <div className="flex justify-center">
-      <div className="w-full max-w-[848px] p-4">
+      <div className="w-full max-w-[848px] overflow-y-auto p-4">
         {isLoading ? (
           // Skeleton Loader
           <div className="space-y-6">

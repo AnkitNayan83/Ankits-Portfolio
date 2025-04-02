@@ -13,7 +13,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="sticky top-0 flex flex-wrap items-center justify-between bg-gray-800 p-4 text-white shadow-lg">
+    <nav className="sticky top-0 z-20 flex flex-wrap items-center justify-between bg-gray-800 p-4 text-white shadow-lg">
       {/* Logo and title */}
       <div className="flex items-center">
         <Link href="/" className="hover:text-blue-400">
