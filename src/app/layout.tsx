@@ -5,6 +5,7 @@ import { type Metadata } from "next";
 
 import { ModalProvider } from "@/providers/modal-provider";
 import { TRPCReactProvider } from "@/trpc/react";
+import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { SessionProvider } from "next-auth/react";
 import { Toaster } from "sonner";
@@ -28,6 +29,7 @@ export default function RootLayout({
             <Toaster />
             {children}
             <SpeedInsights />
+            <Analytics />
           </TRPCReactProvider>
         </SessionProvider>
       </body>
