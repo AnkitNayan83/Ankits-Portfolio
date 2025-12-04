@@ -32,7 +32,7 @@ export const EditCommentModal = () => {
         commentId: data.comment.id,
       });
     }
-  }, [data?.comment, form.reset]);
+  }, [data?.comment, form]);
 
   const editCommentMutation = api.blog.editComment.useMutation({
     onError: (error) => {

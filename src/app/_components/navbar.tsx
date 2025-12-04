@@ -1,22 +1,13 @@
 "use client";
 
 import { UserAvatar } from "@/components/user-avatar";
-import { Menu, X, Code2 } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Code2, Menu, X } from "lucide-react";
 import Link from "next/link";
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -34,26 +25,29 @@ const Navbar = () => {
 
   return (
     <motion.nav
-      className="sticky top-0 z-50 flex items-center justify-between px-4 sm:px-6 md:px-8 py-3 md:py-4 text-white bg-gray-900/95 backdrop-blur-md border-b border-gray-800 shadow-lg transition-all duration-300"
+      className="sticky top-0 z-50 flex items-center justify-between border-b border-gray-800 bg-gray-900/95 px-4 py-3 text-white shadow-lg backdrop-blur-md transition-all duration-300 sm:px-6 md:px-8 md:py-4"
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
     >
       {/* Logo and title */}
       <motion.div
-        className="flex items-center gap-2 flex-shrink-0"
+        className="flex flex-shrink-0 items-center gap-2"
         whileHover={{ scale: 1.05 }}
       >
-        <Link href="/" className="flex items-center gap-2 hover:text-blue-400 transition-colors">
-          <Code2 className="text-blue-400 w-5 h-5 sm:w-6 sm:h-6" />
-          <h1 className="text-lg sm:text-xl md:text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+        <Link
+          href="/"
+          className="flex items-center gap-2 transition-colors hover:text-blue-400"
+        >
+          <Code2 className="h-5 w-5 text-blue-400 sm:h-6 sm:w-6" />
+          <h1 className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-lg font-bold text-transparent sm:text-xl md:text-2xl">
             Ankit Nayan
           </h1>
         </Link>
       </motion.div>
 
       {/* Desktop Navigation - Left aligned */}
-      <div className="hidden lg:flex items-center gap-1 xl:gap-2 flex-1 ml-6">
+      <div className="ml-6 hidden flex-1 items-center gap-1 lg:flex xl:gap-2">
         {navLinks.map((link, index) => (
           <motion.div
             key={link.href}
@@ -64,17 +58,17 @@ const Navbar = () => {
             {link.href === "/blogs" ? (
               <Link
                 href={link.href}
-                className="px-3 xl:px-4 py-2 rounded-lg bg-gradient-to-r from-blue-600/20 to-purple-600/20 border border-blue-500/30 text-xs xl:text-sm font-semibold hover:from-blue-600/30 hover:to-purple-600/30 transition-all"
+                className="rounded-lg border border-blue-500/30 bg-gradient-to-r from-blue-600/20 to-purple-600/20 px-3 py-2 text-xs font-semibold transition-all hover:from-blue-600/30 hover:to-purple-600/30 xl:px-4 xl:text-sm"
               >
                 {link.label}
               </Link>
             ) : (
               <Link
                 href={link.href}
-                className="px-3 xl:px-4 py-2 rounded-lg text-xs xl:text-sm font-medium text-gray-300 hover:text-blue-400 hover:bg-gray-800/50 transition-all relative group"
+                className="group relative rounded-lg px-3 py-2 text-xs font-medium text-gray-300 transition-all hover:bg-gray-800/50 hover:text-blue-400 xl:px-4 xl:text-sm"
               >
                 {link.label}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300"></span>
+                <span className="absolute bottom-0 left-0 h-0.5 w-0 bg-blue-400 transition-all duration-300 group-hover:w-full"></span>
               </Link>
             )}
           </motion.div>
@@ -84,15 +78,19 @@ const Navbar = () => {
       {/* Right side - Avatar and Mobile menu */}
       <div className="flex items-center gap-2 sm:gap-4">
         <UserAvatar />
-        
+
         {/* Mobile menu button */}
         <motion.button
           onClick={toggleMenu}
-          className="lg:hidden flex items-center rounded-lg px-2 sm:px-3 py-2 text-white hover:bg-gray-800/50 transition-colors"
+          className="flex items-center rounded-lg px-2 py-2 text-white transition-colors hover:bg-gray-800/50 sm:px-3 lg:hidden"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
         >
-          {isOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <Menu className="w-5 h-5 sm:w-6 sm:h-6" />}
+          {isOpen ? (
+            <X className="h-5 w-5 sm:h-6 sm:w-6" />
+          ) : (
+            <Menu className="h-5 w-5 sm:h-6 sm:w-6" />
+          )}
         </motion.button>
       </div>
 
@@ -104,9 +102,9 @@ const Navbar = () => {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="absolute top-full left-0 right-0 lg:hidden overflow-hidden bg-gray-900/95 backdrop-blur-md border-b border-gray-800 shadow-lg"
+            className="absolute left-0 right-0 top-full overflow-hidden border-b border-gray-800 bg-gray-900/95 shadow-lg backdrop-blur-md lg:hidden"
           >
-            <div className="flex flex-col space-y-1 pt-2 pb-4 px-4">
+            <div className="flex flex-col space-y-1 px-4 pb-4 pt-2">
               {navLinks.map((link, index) => (
                 <motion.div
                   key={link.href}
@@ -118,7 +116,7 @@ const Navbar = () => {
                     <Link
                       href={link.href}
                       onClick={() => setIsOpen(false)}
-                      className="block px-4 py-3 rounded-lg bg-gradient-to-r from-blue-600/20 to-purple-600/20 border border-blue-500/30 text-center font-semibold hover:from-blue-600/30 hover:to-purple-600/30 transition-all"
+                      className="block rounded-lg border border-blue-500/30 bg-gradient-to-r from-blue-600/20 to-purple-600/20 px-4 py-3 text-center font-semibold transition-all hover:from-blue-600/30 hover:to-purple-600/30"
                     >
                       {link.label}
                     </Link>
@@ -126,7 +124,7 @@ const Navbar = () => {
                     <Link
                       href={link.href}
                       onClick={() => setIsOpen(false)}
-                      className="block px-4 py-3 text-gray-300 hover:text-blue-400 hover:bg-gray-800/50 transition-all rounded-lg"
+                      className="block rounded-lg px-4 py-3 text-gray-300 transition-all hover:bg-gray-800/50 hover:text-blue-400"
                     >
                       {link.label}
                     </Link>

@@ -29,7 +29,7 @@ export const DeleteCommentModal = () => {
         commentId: data.comment.id,
       });
     }
-  }, [data?.comment, form.reset]);
+  }, [data?.comment, form]);
 
   const deleteCommentMutation = api.blog.deleteComment.useMutation({
     onError: (error) => {
@@ -62,7 +62,7 @@ export const DeleteCommentModal = () => {
       >
         <button
           onClick={() => onClose()}
-          className="absolute right-2 top-2 text-gray-400 hover:text-white transition-colors"
+          className="absolute right-2 top-2 text-gray-400 transition-colors hover:text-white"
         >
           <X className="h-6 w-6" />
         </button>
