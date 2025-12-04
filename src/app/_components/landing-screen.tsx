@@ -6,7 +6,6 @@ import { TerminalWindow } from "@/components/ui/terminal-window";
 import { Typewriter } from "@/components/ui/typewriter";
 import { motion, useScroll, useTransform } from "framer-motion";
 import {
-  ArrowDown,
   Cloud,
   Code2,
   Cpu,
@@ -32,27 +31,56 @@ export default function LandingScreen() {
   const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.8]);
 
   const skills = [
-    { name: "C++", category: "Language", icon: Code2 },
-    { name: "Golang", category: "Language", icon: Code2 },
+    // High-demanding skills at the top
+    { name: "Java", category: "Language", icon: Code2, isHighlighted: true },
+    {
+      name: "Spring Boot",
+      category: "Framework",
+      icon: Server,
+      isHighlighted: true,
+    },
+    { name: "Golang", category: "Language", icon: Code2, isHighlighted: true },
+    { name: "Gin", category: "Framework", icon: Server, isHighlighted: true },
+    { name: "AWS", category: "Cloud", icon: Cloud, isHighlighted: true },
+    { name: "gRPC", category: "API", icon: Network, isHighlighted: true },
+    {
+      name: "TypeScript",
+      category: "Language",
+      icon: Code2,
+      isHighlighted: true,
+    },
+    { name: "Node.js", category: "Runtime", icon: Server, isHighlighted: true },
+    {
+      name: "PostgreSQL",
+      category: "Database",
+      icon: Database,
+      isHighlighted: true,
+    },
+    { name: "Docker", category: "DevOps", icon: Cloud, isHighlighted: true },
+    {
+      name: "GitHub Actions",
+      category: "CI/CD",
+      icon: GitBranch,
+      isHighlighted: true,
+    },
+    {
+      name: "Jenkins",
+      category: "CI/CD",
+      icon: GitBranch,
+      isHighlighted: true,
+    },
+    // Other skills
     { name: "JavaScript", category: "Language", icon: Code2 },
-    { name: "TypeScript", category: "Language", icon: Code2 },
+    { name: "C++", category: "Language", icon: Code2 },
     { name: "Python", category: "Language", icon: Code2 },
-    { name: "Java", category: "Language", icon: Code2 },
-    { name: "Node.js", category: "Runtime", icon: Server },
     { name: "Express", category: "Framework", icon: Server },
-    { name: "Gin", category: "Framework", icon: Server },
     { name: "Django", category: "Framework", icon: Server },
-    { name: "PostgreSQL", category: "Database", icon: Database },
     { name: "MongoDB", category: "Database", icon: Database },
     { name: "MySQL", category: "Database", icon: Database },
     { name: "GraphQL", category: "API", icon: Network },
-    { name: "Docker", category: "DevOps", icon: Cloud },
     { name: "Kubernetes", category: "DevOps", icon: Cloud },
-    { name: "AWS", category: "Cloud", icon: Cloud },
     { name: "GCP", category: "Cloud", icon: Cloud },
     { name: "Git", category: "Tool", icon: GitBranch },
-    { name: "GitHub Actions", category: "CI/CD", icon: GitBranch },
-    { name: "Jenkins", category: "CI/CD", icon: GitBranch },
     { name: "Prisma", category: "ORM", icon: Database },
     { name: "GORM", category: "ORM", icon: Database },
     { name: "Socket.io", category: "Real-time", icon: Network },
@@ -62,30 +90,24 @@ export default function LandingScreen() {
     { name: "Computer Networks", category: "System", icon: Network },
   ];
 
-  const displayedSkills = showAllSkills ? skills : skills.slice(0, 16);
+  const displayedSkills = showAllSkills ? skills : skills.slice(0, 50);
 
   const experiences = [
     {
       company: "MathonGo",
-      role: "SDE 1",
-      period: "SEP 2024 - Present",
+      role: "SDE 1 (Full Stack Developer)",
+      period: "JUN 2024 - Present",
       description:
-        "Building scalable backend systems handling 20,000+ concurrent users",
-      tech: ["Node.js", "PostgreSQL", "Docker", "AWS"],
-    },
-    {
-      company: "MathonGo",
-      role: "Backend Developer Intern",
-      period: "JUL 2024 - SEP 2024",
-      description: "Developed RESTful APIs and optimized database queries",
-      tech: ["Express", "MongoDB", "Redis"],
+        "Built features for Marks and Mathongo-LMS serving 300,000-400,000 monthly users. Automated Zoom video recording workflow, reducing manual effort by 100% and saving 5+ hours/week. Developed AI models using 200,000+ questions for intelligent doubt-solving bot. Optimized API response times by 20-30% across multiple projects.",
+      tech: ["Next.js", "Node.js", "MongoDB", "PostgreSQL", "Docker", "AWS"],
     },
     {
       company: "Krinvi Technology",
       role: "Full Stack Developer Intern",
-      period: "JUN 2023 - AUG 2023",
-      description: "Built full-stack applications with modern tech stack",
-      tech: ["React", "Node.js", "MySQL"],
+      period: "JUN 2023 - SEP 2023",
+      description:
+        "Developed features for EduLeague and Audeet. Deployed applications on AWS, improving scalability and performance. Worked with designers and QA to deliver high-quality solutions on time.",
+      tech: ["React", "Node.js", "PostgreSQL", "AWS"],
     },
   ];
 
@@ -96,8 +118,8 @@ export default function LandingScreen() {
         "Learning management system handling 20,000+ users with microservices architecture",
       deployedLink: "https://app.mathongo.com/",
       githubLink: "",
-      tech: ["Node.js", "PostgreSQL", "Docker", "AWS", "Kubernetes"],
-      metrics: "20K+ Users",
+      tech: ["Golang", "Gin", "PostgreSQL", "Docker", "AWS", "Kubernetes"],
+      metrics: "100K+ Users",
     },
     {
       name: "Marks",
@@ -105,8 +127,8 @@ export default function LandingScreen() {
         "Exam preparation platform with 200,000+ active users, optimized for high concurrency",
       deployedLink: "https://web.getmarks.app/",
       githubLink: "",
-      tech: ["Node.js", "MongoDB", "Redis", "AWS"],
-      metrics: "200K+ Users",
+      tech: ["Spring Boot", "Java", "MongoDB", "Redis", "AWS"],
+      metrics: "2.5M+ Users",
     },
     {
       name: "Brocord",
@@ -114,7 +136,7 @@ export default function LandingScreen() {
         "Real-time chat application with voice, video, and text features using WebSockets",
       deployedLink: "",
       githubLink: "https://github.com/AnkitNayan83/Brocord",
-      tech: ["Node.js", "Socket.io", "Express", "MongoDB"],
+      tech: ["Golang", "Gin", "Socket.io", "MongoDB"],
       metrics: "Real-time",
     },
   ];
@@ -122,7 +144,7 @@ export default function LandingScreen() {
   const codingPlatforms = [
     {
       name: "LeetCode",
-      description: "Solved over 400 questions",
+      description: "Solved over 500 questions",
       link: "https://leetcode.com/u/ankitnayan83/",
       icon: Code2,
       color: "text-orange-400",
@@ -136,7 +158,7 @@ export default function LandingScreen() {
     },
     {
       name: "GeeksforGeeks",
-      description: "500+ questions on DSA and System Design",
+      description: "550+ questions on DSA and System Design",
       link: "https://www.geeksforgeeks.org/user/ankitnayan83/",
       icon: Code2,
       color: "text-green-400",
@@ -240,7 +262,7 @@ export default function LandingScreen() {
 
           {/* Social Links */}
           <motion.div
-            className="mt-8 flex items-center justify-center gap-6"
+            className="mb-20 mt-8 flex items-center justify-center gap-6"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1, duration: 0.8 }}
@@ -276,13 +298,13 @@ export default function LandingScreen() {
           </motion.div>
 
           {/* Scroll Indicator */}
-          <motion.div
-            className="absolute bottom-10 left-1/2 -translate-x-1/2 transform"
+          {/* <motion.div
+            className="absolute bottom-8 left-1/2 -translate-x-1/2 transform"
             animate={{ y: [0, 10, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
           >
             <ArrowDown className="text-blue-400" size={32} />
-          </motion.div>
+          </motion.div> */}
         </motion.div>
       </section>
 
@@ -380,6 +402,7 @@ export default function LandingScreen() {
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4">
             {displayedSkills.map((skill, index) => {
               const Icon = skill.icon;
+              const isHighlighted = skill.isHighlighted ?? false;
               return (
                 <motion.div
                   key={skill.name}
@@ -390,14 +413,31 @@ export default function LandingScreen() {
                   transition={{ delay: index * 0.05, duration: 0.3 }}
                 >
                   <motion.div
-                    className="relative cursor-pointer overflow-hidden rounded-lg border border-gray-700 bg-gradient-to-br from-gray-800/50 to-gray-900/50 p-4 backdrop-blur-sm"
+                    className={`relative cursor-pointer overflow-hidden rounded-lg border p-4 backdrop-blur-sm ${
+                      isHighlighted
+                        ? "border-blue-500/50 bg-gradient-to-br from-blue-900/50 to-purple-900/50 shadow-lg shadow-blue-500/20"
+                        : "border-gray-700 bg-gradient-to-br from-gray-800/50 to-gray-900/50"
+                    }`}
                     whileHover={{ scale: 1.05, y: -5 }}
                     transition={{ type: "spring", stiffness: 300 }}
                   >
-                    <div className="absolute inset-0 bg-gradient-to-r from-blue-500/0 via-blue-500/10 to-blue-500/0 opacity-0 transition-opacity group-hover:opacity-100"></div>
+                    <div
+                      className={`absolute inset-0 bg-gradient-to-r opacity-0 transition-opacity group-hover:opacity-100 ${
+                        isHighlighted
+                          ? "from-blue-500/0 via-blue-500/20 to-purple-500/0"
+                          : "from-blue-500/0 via-blue-500/10 to-blue-500/0"
+                      }`}
+                    ></div>
                     <div className="relative z-10">
-                      <Icon className="mb-2 text-blue-400" size={24} />
-                      <p className="text-sm font-semibold">{skill.name}</p>
+                      <Icon
+                        className={`mb-2 ${isHighlighted ? "text-blue-300" : "text-blue-400"}`}
+                        size={24}
+                      />
+                      <p
+                        className={`text-sm font-semibold ${isHighlighted ? "text-blue-200" : ""}`}
+                      >
+                        {skill.name}
+                      </p>
                       <p className="mt-1 text-xs text-gray-500">
                         {skill.category}
                       </p>
@@ -408,7 +448,7 @@ export default function LandingScreen() {
             })}
           </div>
 
-          {skills.length > 16 && (
+          {skills.length > 50 && (
             <div className="mt-8 flex justify-center">
               <motion.button
                 onClick={() => setShowAllSkills(!showAllSkills)}
@@ -679,8 +719,7 @@ export default function LandingScreen() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
         >
-          &copy; {new Date().getFullYear()} Ankit Nayan. Built with Next.js &
-          TypeScript.
+          &copy; {new Date().getFullYear()} Ankit Nayan.
         </motion.p>
       </footer>
     </div>
