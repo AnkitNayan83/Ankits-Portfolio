@@ -57,15 +57,15 @@ export const EditCommentModal = () => {
   return (
     <div
       onClick={() => onClose()}
-      className="fixed inset-0 z-10 flex items-center justify-center bg-black/50 text-white"
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 text-white"
     >
       <div
-        className="relative w-full max-w-[500px] rounded bg-gray-900 p-8 text-center shadow-md"
+        className="relative z-[101] w-full max-w-[500px] rounded bg-gray-900 p-8 text-center shadow-md"
         onClick={(e) => e.stopPropagation()}
       >
         <button
           onClick={() => onClose()}
-          className="absolute right-2 top-2 text-gray-500 hover:text-gray-800"
+          className="absolute right-2 top-2 text-gray-400 hover:text-white transition-colors"
         >
           <X className="h-6 w-6" />
         </button>

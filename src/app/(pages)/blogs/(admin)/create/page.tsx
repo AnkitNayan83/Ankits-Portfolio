@@ -8,8 +8,8 @@ const CreateBlog = async () => {
     return <div className="text-red-500">Unauthorized</div>;
   }
   return (
-    <div className="flex w-full justify-center">
-      <div className="w-full max-w-[848px]">
+    <div className="flex w-full justify-center min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 text-white">
+      <div className="w-full max-w-[848px] p-4">
         <CreateBlogForm type="create" />
       </div>
     </div>

@@ -126,7 +126,7 @@ export const BlogComments = ({ blogId }: { blogId: number }) => {
             variant="ghost"
             size="sm"
             onClick={() => setShowReplyForm((prev) => !prev)}
-            className="text-sm text-gray-600"
+            className="text-sm text-gray-300 hover:text-blue-400"
           >
             {showReplyForm ? (
               <>
@@ -142,7 +142,7 @@ export const BlogComments = ({ blogId }: { blogId: number }) => {
             variant="ghost"
             size="sm"
             onClick={() => toggleCommentExpansion(comment.id)}
-            className="text-sm text-gray-600"
+            className="text-sm text-gray-300 hover:text-blue-400"
           >
             {isExpanded ? "Hide replies" : "Show replies"}
           </Button>
@@ -162,7 +162,7 @@ export const BlogComments = ({ blogId }: { blogId: number }) => {
         )}
 
         {isExpanded && (
-          <div className="ml-6 mt-4 border-l-2 border-gray-200 pl-4">
+          <div className="ml-6 mt-4 border-l-2 border-gray-700 pl-4">
             {replyLoading && (
               <p className="text-sm">
                 <Loader2 className="inline-block h-4 w-4 animate-spin" />

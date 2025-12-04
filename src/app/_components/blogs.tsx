@@ -15,7 +15,7 @@ export const Blogs = () => {
   }
 
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950">
       <div className="w-full max-w-[848px] overflow-y-auto p-4">
         {isLoading ? (
           // Skeleton Loader

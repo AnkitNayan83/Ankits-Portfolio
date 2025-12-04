@@ -22,7 +22,7 @@ export const SingleBlog = ({ blog }: { blog: BlogTable | null }) => {
   }
 
   return (
-    <div className="flex justify-center px-3 text-white">
+    <div className="flex justify-center px-3 text-white min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950">
       <Head>
         <title>{blog?.title}</title>
         <meta name="description" content={blog?.content ?? ""} />

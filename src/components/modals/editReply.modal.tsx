@@ -46,10 +46,10 @@ export const EditReplyModal = () => {
   return (
     <div
       onClick={() => onClose()}
-      className="fixed inset-0 z-10 flex items-center justify-center bg-black/50 text-white"
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 text-white"
     >
       <div
-        className="relative rounded bg-gray-900 p-8 text-center shadow-md"
+        className="relative z-[101] rounded bg-gray-900 p-8 text-center shadow-md"
         onClick={(e) => e.stopPropagation()}
       >
         <Form {...form}>

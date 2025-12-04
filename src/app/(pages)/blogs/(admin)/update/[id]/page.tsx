@@ -11,9 +11,9 @@ const UpdatePage = async ({ params }: UpdatePageProps) => {
 
   if (!blog) return <span>Blog not found</span>;
   return (
-    <div className="flex justify-center">
-      <div className="w-full max-w-[1024px]">
-        <CreateBlogForm type="update" blog={blog} />;
+    <div className="flex justify-center min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 text-white">
+      <div className="w-full max-w-[1024px] p-4">
+        <CreateBlogForm type="update" blog={blog} />
       </div>
     </div>
   );

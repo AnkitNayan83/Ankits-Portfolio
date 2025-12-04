@@ -17,15 +17,15 @@ export const AuthModal = () => {
   return (
     <div
       onClick={() => onClose()}
-      className="fixed inset-0 z-10 flex items-center justify-center bg-black/50 text-white"
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 text-white"
     >
       <div
-        className="relative rounded bg-gray-900 p-8 text-center shadow-md"
+        className="relative z-[101] rounded bg-gray-900 p-8 text-center shadow-md"
         onClick={(e) => e.stopPropagation()}
       >
         <button
           onClick={() => onClose()}
-          className="absolute right-2 top-2 text-gray-500 hover:text-gray-800"
+          className="absolute right-2 top-2 text-gray-400 hover:text-white transition-colors"
         >
           ×
         </button>
@@ -33,7 +33,7 @@ export const AuthModal = () => {
           Log in to interact with the blogs
         </h2>
         <Button
-          className="bg-white text-black hover:bg-white"
+          className="bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-500 hover:to-purple-500"
           onClick={handleGoogleSignIn}
         >
           Sign in with Google
