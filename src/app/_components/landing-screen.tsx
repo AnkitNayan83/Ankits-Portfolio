@@ -99,7 +99,7 @@ export default function LandingScreen() {
       period: "JUN 2024 - Present",
       description:
         "Built features for Marks and Mathongo-LMS serving 300,000-400,000 monthly users. Automated Zoom video recording workflow, reducing manual effort by 100% and saving 5+ hours/week. Developed AI models using 200,000+ questions for intelligent doubt-solving bot. Optimized API response times by 20-30% across multiple projects.",
-      tech: ["Next.js", "Node.js", "MongoDB", "PostgreSQL", "Docker", "AWS"],
+      tech: ["Spring Boot", "Golang", "Next.js", "MongoDB", "Docker", "AWS"],
     },
     {
       company: "Krinvi Technology",
